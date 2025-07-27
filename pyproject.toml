@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bi-sales-simulator-spark"
+name = "bi.sales.simulator.spark"
 version = "0.1.0"
 description = ""
 dependencies = [
