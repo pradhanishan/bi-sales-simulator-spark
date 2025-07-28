@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 
+
 class Log4J:
     """
     Wrapper class for Log4J logging in PySpark.

@@ -1,6 +1,6 @@
 from utility.session_manager.spark_session import SparkSessionFactory
+from utility.path_manager import PathBuilder
 from faker import Faker
-from pathlib import Path
 import shutil
 import random
 from datetime import date
@@ -27,7 +27,8 @@ if __name__ == "__main__":
     spark = SparkSessionFactory().get_or_create_spark_session()
     fake = Faker()
 
-    project_root = Path(__file__).resolve().parent
+    # ✅ Use PathBuilder to get root and point to /out directory
+    project_root = PathBuilder().get_root_directory()
     out_dir = project_root / "out"
     out_dir.mkdir(parents=True, exist_ok=True)
 

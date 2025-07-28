@@ -3,6 +3,8 @@ from typing import Set, Dict
 from pyspark.sql import SparkSession
 from pathlib import Path
 
+from utility.path_manager import PathBuilder
+
 
 @dataclass(frozen=True)
 class DatabaseSection:
@@ -22,7 +24,8 @@ class DatabaseBuilder:
     def __init__(self, spark: SparkSession, dbs: DatabaseSection = DatabaseSection()) -> None:
         self.spark = spark
         self.dbs = dbs
-        self.catalog_path = Path(__file__).resolve().parents[2] / "data"
+        self.path_builder = PathBuilder()
+        self.catalog_root = self.path_builder.get_data_directory()
 
     def build_databases(self) -> None:
         """
@@ -37,6 +40,6 @@ class DatabaseBuilder:
         for group_name, db_names in database_groups.items():
             for db in db_names:
                 if not self.spark.catalog.databaseExists(db):
-                    path = self.catalog_path / group_name / db
-                    self.spark.sql(f"CREATE DATABASE {db} LOCATION '{str(path)}'")
-                    print(f"✅ Created database: {db} at {path}")
+                    db_path = self.catalog_root / group_name / db
+                    self.spark.sql(f"CREATE DATABASE {db} LOCATION '{str(db_path)}'")
+                    print(f"✅ Created database: {db} at {db_path}")
