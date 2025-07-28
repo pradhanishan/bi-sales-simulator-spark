@@ -2,7 +2,9 @@ from dotenv import load_dotenv
 from pyspark.sql import SparkSession
 from typing import Optional
 from pathlib import Path
-
+import sys
+from delta import *
+print("✅ delta works in:", sys.executable)
 
 class SparkSessionFactory:
     """
@@ -34,8 +36,7 @@ class SparkSessionFactory:
         if self._spark_session is not None:
             return self._spark_session
 
-        self._spark_session = (
-            SparkSession.builder
+        builder = (SparkSession.builder
             .appName("bi_sales_simulator")
             .master("local[3]")
             .enableHiveSupport()
@@ -43,8 +44,10 @@ class SparkSessionFactory:
                 "spark.driver.extraJavaOptions",
                 f"-Dlog4j.configuration=file:{self.log4j_config_path} -Dlog.path={self.logs_dir}"
             )
-            .getOrCreate()
-        )
+            .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+            .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog"))
+        
+        self._spark_session = configure_spark_with_delta_pip(builder).getOrCreate()
 
         self._spark_session._jvm.org.apache.log4j.LogManager.getLogger("bi.application.bi_sales_simulator") \
             .setLevel(self._spark_session._jvm.org.apache.log4j.Level.WARN)
