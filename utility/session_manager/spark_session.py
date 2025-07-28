@@ -38,6 +38,7 @@ class SparkSessionFactory:
             SparkSession.builder
             .appName("bi_sales_simulator")
             .master("local[3]")
+            .enableHiveSupport()
             .config(
                 "spark.driver.extraJavaOptions",
                 f"-Dlog4j.configuration=file:{self.log4j_config_path} -Dlog.path={self.logs_dir}"
