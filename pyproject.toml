@@ -5,9 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bi.sales.simulator.spark"
 version = "0.1.0"
-description = ""
+description = "A local Spark project for sales simulation"
 dependencies = [
-    "pyspark",
+    "pyspark>=3.5",
+    "delta-spark>=3.0.0",
     "python-dotenv"
 ]
 
@@ -15,4 +16,4 @@ dependencies = [
 package-dir = {"" = "utility"}
 
 [tool.setuptools.packages.find]
-where = ["packages"]
+where = ["utility"]
