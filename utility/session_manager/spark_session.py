@@ -2,9 +2,7 @@ from dotenv import load_dotenv
 from pyspark.sql import SparkSession
 from typing import Optional
 from pathlib import Path
-import sys
 from delta import *
-print("✅ delta works in:", sys.executable)
 
 class SparkSessionFactory:
     """
