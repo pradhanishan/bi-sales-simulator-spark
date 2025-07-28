@@ -1,6 +1,6 @@
 appnope==0.1.4
 asttokens==3.0.0
--e git+https://github.com/pradhanishan/bi-sales-simulator-spark.git@a650ba546f18115a8b9a16679ca0a5a4ac504c78#egg=bi.sales.simulator.spark
+-e git+https://github.com/pradhanishan/bi-sales-simulator-spark.git@4dfc85d1bbbc395b6aa86c95dcc641435933f353#egg=bi.sales.simulator.spark
 comm==0.2.3
 debugpy==1.8.15
 decorator==5.2.1
